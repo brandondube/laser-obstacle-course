@@ -1,0 +1,70 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% packages | mi-laser-doc.tex
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% graphics
+\usepackage{graphicx}  % graphics
+\usepackage{epstopdf}  % eps files
+\graphicspath{{../Images/}}  % images location
+
+% layout
+\usepackage{float}     % forced figure positioning
+\usepackage{caption}   % caption formatting
+\captionsetup[figure]{labelfont=bf,width=1.00\textwidth} %figure captions
+\captionsetup[table]{labelfont=bf,width=1.00\textwidth}  %table captions
+\captionsetup{font=small}
+
+% text
+\usepackage{lmodern}   % latin modern fonts, for palatino
+\usepackage{booktabs}  % booktabs for perfect tables
+\usepackage{lipsum}    % for blind text
+\usepackage{amsmath}   % ams math environments and commands
+\usepackage{textcomp}  % more math stuff
+\usepackage{tikz}      % this is a graphics package but we will use it to print page #
+\usepackage{pxfonts}   % package for palatino support
+\usepackage{tgpagella} % package for palatino support (math mode)
+\usepackage{hyperref}  % links
+
+% bonus colors
+\usepackage{xcolor}
+
+% osa blue = 47/255, 66/255, 154/255
+\definecolor{OSABlue}{rgb}{0.1845, .259, 0.604}
+
+% color chapter names
+\renewcommand\chapnumfont{%
+    \leavevmode\Huge\bfseries\color{OSABlue}\sffamily%
+}%
+\renewcommand\chapnamefont{%
+    \leavevmode\Huge\bfseries\color{OSABlue}\sffamily%
+}%
+\renewcommand\chaptitlefont{%
+    \leavevmode\Huge\bfseries\color{OSABlue}\sffamily%
+}%
+\setsecheadstyle{%
+    \leavevmode\Large\bfseries\color{OSABlue}\sffamily%
+}%
+
+% finesee table and figure numbering
+\renewcommand{\thefigure}{%
+    \arabic{figure}
+}
+\renewcommand{\thetable}{%
+    \arabic{table}
+}
+% table of contents depth
+\maxtocdepth{subsection}
+
+% stretching row height in tables
+\newcommand{\ra}[1]{\renewcommand{\arraystretch}{#1}} % ex: \ra{1.2}
+
+% the iron rule of palatino
+\renewcommand{\rmdefault}{ppl}
+
+% links
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    citecolor=[rgb]{0.0078,0.2431,0.9725},
+    urlcolor=[rgb]{0.0078,0.2431,0.9725}
+}
