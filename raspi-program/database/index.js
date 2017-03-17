@@ -15,7 +15,6 @@ function Database(path) {
 // push data into the database
 Database.prototype.push = function push(data) {
   // update the store object with the new data
-
   if (!this.canUpdate) { throw new DatabaseAccessError(); }
   this.store = Object.assign({}, this.store, reshape(data));
 
@@ -29,6 +28,11 @@ Database.prototype.push = function push(data) {
   }
   return this;
 };
+
+// get a copy of the data
+Database.prototype.pull = function pull() {
+  return this.store;
+}
 
 // write the database to the disk.  This method is auto-called by the push
 // method if it has been more than 10 minutes since push was last called
