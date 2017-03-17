@@ -38,3 +38,6 @@ jspm_packages
 
 # scraps in the development directory
 devdb
+
+# sublime workspace
+.sublime-workspace
