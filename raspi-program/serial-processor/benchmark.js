@@ -1,51 +1,21 @@
-const parsePRs = require('./index').parsePhotoresistors;
-const parseLaser = require('./index').parseLaserState;
+const process = require('./index')
 
 const mockInput = '0_1023_1023_1023_1023_1023_1023_1023_1023_1023_1023';
 const numTrials = 10000;
 
-console.time('photoresistors');
+console.time('parse time');
 for (let i = 0; i < numTrials; i++) {
-  var prVals = parsePRs(mockInput);
+  var state = process(mockInput);
 }
-console.timeEnd('photoresistors');
+console.timeEnd('parse time');
 
-// photoressitor results:
+// results:
 // i7-7700HQ (4c/8t @ 2.8Ghz base, 3.6Ghz turbo)
-// trial 1: 17.771ms
-// trial 2: 17.455ms
-// trial 3: 17.916ms
-// average: 17.714ms
-// per-execution time is 17μs.
+// trial 1: 17.502ms
+// trial 2: 19.380ms
+// trial 3: 18.837ms
+// average: 18.573ms
+// per-execution time is 18.5μs.
 
-// raspi is ~1/3 as fast, ~50μs per execution.
-// fast enough for 2000 calls per second.  ✓
-
-console.time('laserState');
-for (let i = 0; i < numTrials; i++) {
-  var laserState = parseLaser(mockInput);
-}
-console.timeEnd('laserState');
-
-// laserstate results:
-// i7-7700HQ (4c/8t @ 2.8Ghz base, 3.6Ghz turbo)
-// trial 1: 17.771ms
-// trial 2: 17.455ms
-// trial 3: 17.916ms
-// average: 17.714ms
-// per-execution time is 17μs.
-
-// raspi is ~1/3 as fast, ~50μs per execution.
-// fast enough for 2000 calls per second.  ✓
-
-// the reason we don't only go over the string once is because it takes too long
-// for javascript to create an object.  Compare to 10,000 object creations:
-
-console.time('object creation reference');
-for (let i = 0; i < numTrials; i++) {
-  var asdf = {
-    'laserState': true,
-    'prValues': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-  };
-}
-console.timeEnd('object creation reference');
+// raspi is ~1/3 as fast, ~55μs per execution.
+// fast enough for 1800 calls per second.  ✓

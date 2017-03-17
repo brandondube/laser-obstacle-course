@@ -6,20 +6,23 @@
 // this results in 51 characters per message, at 8 bits per character this
 // allows up to 23.5 'frames' per second.
 
-function parsePhotoresistors(data) {
+// int parsing is extremely fast, coalescence to a bool is also fast
+// these both happen within a single cycle on the CPU, so this bool parse is
+// essentially free
+function parseBool(val) {
+  return parseInt(val) > 0;
+}
+
+function process(data) {
   var inputArray = data.split('_');
 
   // shiftremoves first value from the array
-  inputArray.shift();
+  var lasersOn = parseBool(inputArray.shift());
 
-  return inputArray.map(v => parseInt(v)); // parse strings to ints
+  return {
+    lasersOn,
+    prstates: inputArray.map(v => parseInt(v)), // parse strings to ints
+  }
 }
 
-function parseLaserState(data) {
-  return parseInt(data.split('_')[0]) > 0;
-}
-
-module.exports = {
-  parsePhotoresistors,
-  parseLaserState,
-};
+module.exports = process;
