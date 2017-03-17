@@ -17,10 +17,7 @@ Consequently, we must fix it, like everything else, in software.
 // works with the ++i operator compared to the i++ operator and the ability of
 // the compiler to cache the length variable between iterations.  The behavior
 // of the loop inside the lower scope is the same.
-function checkLasers(prValues, nominalValues, stdevValues) {
-  let lowerBounds = nominalValues - 3*stdevValues || 
-  let upperBounds = nominalValues + 3*stdevValues;
-
+function checkLasers(prValues, lowerBounds, upperBounds) {
   let lasersBroken = false;
   for (let i = 0, len = prValues.length; ++i < len;) {
     if (prValues[i] > upperBounds[i] || prValues[i] < lowerBounds[i]) {
