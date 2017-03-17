@@ -5,7 +5,7 @@ const numTrials = 10000;
 
 console.time('parse time');
 for (let i = 0; i < numTrials; i++) {
-  var state = process(mockInput);
+  process(mockInput);
 }
 console.timeEnd('parse time');
 
@@ -14,6 +14,7 @@ console.timeEnd('parse time');
 // trial 1: 17.502ms
 // trial 2: 19.380ms
 // trial 3: 18.837ms
+//          --------
 // average: 18.573ms
 // per-execution time is 18.5μs.
 

@@ -1,14 +1,17 @@
-// data is a string with the following format:
-// laserState_pr01_pr02_pr03...pr_10
-// laserState is a boolean, pr01~pr10 are 10 bit integers, [0,1023]
-// importantly, values are separated by an underscore.
+/*
+data is a string with the following format:
+finishedPushed_startPushed_laserState_pr01_pr02_pr03...pr_10
+finished, start, and laserState are 0/1 booleans, 
+pr01~pr10 are 10 bit integers, [0,1023]
 
-// this results in 51 characters per message, at 8 bits per character this
-// allows up to 23.5 'frames' per second.
+values are separated by an underscore.
 
-// int parsing is extremely fast, coalescence to a bool is also fast
-// these both happen within a single cycle on the CPU, so this bool parse is
-// essentially free
+this results in 55 characters per message, at 8 bits per character this
+allows up to 22 'frames' per second at a baudrate of 9600.
+*/
+
+// because modern CPUs can perform many different instructions in a single cycle
+// this function is free under most CPU loads for a single value
 function parseBool(val) {
   return parseInt(val) > 0;
 }
@@ -16,13 +19,18 @@ function parseBool(val) {
 function process(data) {
   var inputArray = data.split('_');
 
-  // shiftremoves first value from the array
+  // shift removes first value from the array
+  var startPushed = parseBool(inputArray.shift());
+  var finishPushed = parseBool(inputArray.shift());
   var lasersOn = parseBool(inputArray.shift());
+  var prStates = inputArray.map(v => parseInt(v));
 
   return {
+    startPushed,
+    finishPushed,
     lasersOn,
-    prstates: inputArray.map(v => parseInt(v)), // parse strings to ints
-  }
+    prStates,
+  };
 }
 
 module.exports = process;
