@@ -8,6 +8,7 @@
       "name": "Launch Program",
       "type": "node2",
       "request": "launch",
+      "runtimeArgs": ["--harmony"],
       "program": "${workspaceRoot}\\raspi-program\\main.js",
       "cwd": "${workspaceRoot}"
     },
