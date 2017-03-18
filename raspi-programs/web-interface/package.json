@@ -1,0 +1,15 @@
+{
+  "name": "laser-obstacle-course-ui",
+  "version": "0.0.1",
+  "description": "the user interface of a laser obstacle course",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Brandon Dube",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.15.2",
+    "socket.io": "^1.7.3"
+  }
+}
