@@ -20,7 +20,7 @@ const sp = new SerialPort('pathToPort', {
     parser: SerialPort.parsers.readline('\n'),
 });
 const socket = io.connect('localhost', {
-  port: 8080
+  port: 8080,
   reconnect: true,
 });
 
