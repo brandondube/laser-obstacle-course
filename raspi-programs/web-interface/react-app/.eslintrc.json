@@ -1,0 +1,21 @@
+{
+    "extends": "airbnb",
+    "installedESLint": true,
+    "plugins": [
+        "react",
+        "jsx-a11y",
+        "import"
+    ],
+    "rules": {
+        "no-unused-expressions": ["error", {"allowTernary": true}],
+        "no-plusplus": "off",
+        "no-multi-spaces": "off",
+        "linebreak-style": "off"
+    },
+    "globals": {
+        "window": false,
+        "document": false,
+        "Request": false,
+        "DOMParser": false
+    }
+}
