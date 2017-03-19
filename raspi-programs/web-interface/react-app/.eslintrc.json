@@ -10,7 +10,8 @@
         "no-unused-expressions": ["error", {"allowTernary": true}],
         "no-plusplus": "off",
         "no-multi-spaces": "off",
-        "linebreak-style": "off"
+        "linebreak-style": "off",
+        "sort-imports": "off"
     },
     "globals": {
         "window": false,
