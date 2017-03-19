@@ -1,11 +1,13 @@
 // web stack
-const app  = require('express')();
-const http = require('http').Server(app);
+const express = require('express');
+const app  = express();
+const server = require('http').Server(app);
 const path = require('path');
-const io   = require('socket.io').listen(8080);
+const io   = require('socket.io')(server);
 
 // express setup
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'www-root', 'index.html')));
+app.use(express.static(path.join(__dirname, 'www-root')));
+app.get('/', (req, res) => res.sendFile('index.html'));
 app.listen(80, () => console.log('web server listening on port 80'));
 
 // socket setup

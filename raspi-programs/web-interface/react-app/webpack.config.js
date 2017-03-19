@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const path = require('path');
 
 module.exports = {
@@ -11,10 +10,6 @@ module.exports = {
     vendor: [
       'react',
       'react-dom',
-      'react-redux',
-      'redux',
-      'redux-thunk',
-      'isomorphic-fetch',
       'material-ui',
       'react-tap-event-plugin',
     ],
@@ -68,6 +63,5 @@ module.exports = {
       cache: 'true',
     }),
     new webpack.NamedModulesPlugin(),
-    new BundleAnalyzerPlugin(),
   ],
 };
