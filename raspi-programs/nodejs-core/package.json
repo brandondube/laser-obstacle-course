@@ -5,9 +5,13 @@
   "main": "main.js",
   "author": "Brandon Dube",
   "license": "MIT",
+  "devDependencies": {
+    "eslint": "^3.18.0",
+    "eslint-config-node": "^1.6.0"
+  },
   "dependencies": {
     "serialport": "^4.0.7",
-    "socket.io": "^1.7.3"
+    "socket.io-client": "^1.7.3"
   },
   "scripts": {
     "test": "mocha raspi-program/**/*.spec.js"
