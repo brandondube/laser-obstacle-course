@@ -12,6 +12,14 @@ import AppRoot from './AppRoot';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
+// font & css loading
+require('./fontloader');
+require('./cssloader');
+
+// socket.io
+import io from 'socket.io-client';
+var socket = io();
+
 const render = (Component) => {
   ReactDOM.render(
     <AppContainer>
