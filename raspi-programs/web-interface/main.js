@@ -8,7 +8,7 @@ const io   = require('socket.io')(server);
 // express setup
 app.use(express.static(path.join(__dirname, 'www-root')));
 app.get('/', (req, res) => res.sendFile('index.html'));
-app.listen(80, () => console.log('web server listening on port 80'));
+server.listen(80, () => console.log('web server listening on port 80'));
 
 // socket setup
 io.on('connection', socket => {
