@@ -42,6 +42,10 @@ module.exports = {
         test: /\.(eot|woff|woff2|ttf)$/,
         use: 'file-loader?name=fonts/[name].[ext]',
       },
+      {
+        test: /\.css$/,
+        use: 'file-loader?name=css/[name].[ext]',
+      },
     ],
   },
   plugins: [
