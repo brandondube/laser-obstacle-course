@@ -2,7 +2,6 @@
 import React from 'react';
 
 // material-ui
-// material-ui
 // import RaisedButton from 'material-ui/RaisedButton';
 import {
   Toolbar,
@@ -10,6 +9,7 @@ import {
   ToolbarSeparator,
   ToolbarTitle,
 } from 'material-ui/Toolbar';
+import Slider from 'material-ui/Slider';
 
 import {
   indigo800 as bgBlue,
@@ -17,6 +17,19 @@ import {
 } from 'material-ui/styles/colors';
 
 class Header extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      volume: 75,
+    };
+  }
+
+  changeVolume = (e, v) => {
+    this.setState({volume: v});
+    socket.emit('set-volume', v);
+  }
+
   render() {
     return (
       <Toolbar style={{ background: bgBlue }}>
@@ -32,10 +45,23 @@ class Header extends React.Component {
           />
         </ToolbarGroup>
         <ToolbarGroup>
-          <ToolbarTitle
-            style={{ color: yellow }}
-            text="Now Playing: Mission Impossible - Main Theme"
-          />
+            <Slider
+              min={0}
+              max={100}
+              step={1}
+              defaultValue={75}
+              value={this.state.volume}
+              onChange={this.changeVolume}
+              style={{
+                width: '300px',
+                marginTop: '22px',
+                marginRight: '25px',
+              }}
+            />
+            <ToolbarTitle
+              style={{ color: yellow }}
+              text="Now Playing: Mission Impossible - Main Theme"
+            />
         </ToolbarGroup>
       </Toolbar>
     );

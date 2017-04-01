@@ -21,6 +21,10 @@ const theme = getMuiTheme({
     fontFamily: 'Nunito Sans, sans-serif',
   },
   fontFamily: 'Nunito Sans, sans-serif',
+  slider: {
+    trackColor: Colors.grey50,
+    selectionColor: Colors.yellow500,
+  },
 });
 
 const AppRoot = () => (
