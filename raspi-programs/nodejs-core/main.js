@@ -50,10 +50,15 @@ function gameDataHandler(data) {
       handleAlignMode(gameState);
       break;
     case gameModes.calibrate:
-      handleCalibrationMode(gameState, calVals, socket);
+      calVals = handleCalibrationMode(gameState, calVals, socket);
       calibrationSamplesRemaining--;
       if (calibrationSamplesRemaining === 0) {
-
+        const { avgs, stds } = meanstd2d(calVals);
+        db.push({
+          prLowerBounds: avgs - 2 * stds,
+          prUpperBounds: avgs + 2 * stds,
+        });
+        currentMode = gameModes.rest;
       }
       break;
     case gameModes.play:
