@@ -16,7 +16,7 @@ function Database(path) {
 Database.prototype.push = function push(data) {
   // update the store object with the new data
   if (!this.canUpdate) { throw new DatabaseAccessError(); }
-  this.store = Object.assign({}, this.store, reshape(data));
+  this.store = Object.assign({}, this.store, data);
 
   // if it has been more than 10 minutes, save to disk
   var now = new Date();
@@ -78,17 +78,6 @@ function DatabaseAccessError() {
     name: 'DatabaseAccessError',
     message: 'database is locked, access is denied.',
   };
-}
-
-function reshape(data) {
-  let returnVar = {};
-  for (var property in data) {
-    if (data.hasOwnProperty(property)) {
-      returnVar[property] = data[property];
-      // do something to filter/rehape the object
-    }
-  }
-  return returnVar;
 }
 
 module.exports = Database;
