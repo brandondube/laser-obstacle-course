@@ -16,10 +16,6 @@ injectTapEventPlugin();
 require('./fontloader');
 require('./cssloader');
 
-// socket.io
-import io from 'socket.io-client';
-var socket = io();
-
 const render = (Component) => {
   ReactDOM.render(
     <AppContainer>

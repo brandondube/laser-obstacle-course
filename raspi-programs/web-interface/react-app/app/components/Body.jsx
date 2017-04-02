@@ -16,17 +16,30 @@ import Align from './Tabs/Align';
 import Calibrate from './Tabs/Calibrate';
 import Play from './Tabs/Play';
 
+
+// utility functions
+import timeOffsetToString from '../lib/timeOffsetToString';
+
+const inkBarHeight = {
+  height: 6,
+};
+
 class Body extends React.Component {
   constructor(props) {
     super(props);
 
+    const now = new Date();
     this.state = {
       selectedTabIndex: 3,
       calibrationData: [],
+      timeReference: now,
+      timeCurrent: now,
     };
   };
 
   componentDidMount() {
+    const socket = this.context.socket;
+    // bind calibration event behavior
     socket.on('cal:init', (numDiodes) => {
       this.setState({
         calibrationData: new Array(numDiodes),
@@ -38,13 +51,35 @@ class Body extends React.Component {
         calibrationData: cd,
       });
     });
+    // bind game event behavior
+    socket.on('game:start', () => {
+      this.timer = setInterval(
+        this.tick,
+        1000
+      );
+    });
+    socket.on('game:end', () => {
+      clearInterval(this.timer);
+    });
+
+    this.timer = setInterval(
+      this.tick,
+      1000
+    );
   }
+
+  componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
+  tick = () => {this.setState({ timeCurrent: new Date()}) };
   select = (index) => { this.setState({selectedTabIndex: index})};
   render() {
     return (
       <Tabs
         value={this.state.selectedTabIndex}
         onChange={this.select}
+        inkBarStyle={inkBarHeight}
       >
         <Tab
           value={0}
@@ -72,12 +107,18 @@ class Body extends React.Component {
           label="Play"
           icon={<AvPlayArrow/>}
         >
-          <Play time="12:45" />
+          <Play
+            time={timeOffsetToString(this.state.timeCurrent - this.state.timeReference)}
+          />
         </Tab>
       </Tabs>
     )
   };
 };
 
-export default Body;
+const T = React.PropTypes;
+Body.contextTypes = {
+  socket: T.object,
+};
 
+export default Body;

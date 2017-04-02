@@ -10,6 +10,11 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import * as Colors from 'material-ui/styles/colors';
 
+// sockets
+import io from 'socket.io-client';
+import SocketProvider from './SocketProvider';
+const socket = io.connect();
+
 // build theme
 const theme = getMuiTheme({
   palette: {
@@ -25,14 +30,22 @@ const theme = getMuiTheme({
     trackColor: Colors.grey50,
     selectionColor: Colors.yellow500,
   },
+  tabs: {
+    backgroundColor: Colors.yellow500,
+    textColor: Colors.indigo300,
+    selectedTextColor: Colors.indigo900,
+  },
+  inkBar: {
+    backgroundColor: Colors.indigo400,
+  },
 });
 
 const AppRoot = () => (
   <MuiThemeProvider muiTheme={theme}>
-    <div>
+    <SocketProvider socket={socket}>
       <Header />
       <Body />
-    </div>
+    </SocketProvider>
   </MuiThemeProvider>
 );
 export default AppRoot;
