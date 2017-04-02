@@ -4,7 +4,7 @@ function handleCalibrationMode(gameState, workArray, socket) {
 
   // immutably merge the new data onto the work array in 2D, this might be buggy
   workArray = [...workArray, prStates];
-  return;
+  return workArray;
 }
 
 module.exports = handleCalibrationMode;
