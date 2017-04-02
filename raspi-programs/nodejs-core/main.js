@@ -1,5 +1,5 @@
 // database
-const Database = require('./database');
+const Database = require('./lib/database');
 
 // Serial Port
 const SerialPort = require('serialport');
@@ -8,10 +8,10 @@ const SerialPort = require('serialport');
 const io = require('socket.io-client');
 
 // serial communication processor
-const process = require('./serial-processor');
+const process = require('./lib/serial-processor');
 
 // laser state checker
-const checkLasers = require('.c/heck-if-lasers-are-broken');
+const checkLasers = require('./lib/check-if-lasers-are-broken');
 
 // initialize components
 const db = new Database('devdb/db.json');
@@ -20,28 +20,53 @@ const sp = new SerialPort('pathToPort', {
     parser: SerialPort.parsers.readline('\n'),
 });
 const socket = io.connect('localhost', {
-  port: 8080,
+  port: 80,
   reconnect: true,
 });
 
+// game modes enum
+const gameModes = Object.freeze({
+  rest: 1,
+  align: 2,
+  calibrate: 3,
+  play: 4,
+});
+
+// initialize the game in its rest mode
+var currentMode = gameModes.rest;
+var calibrationSamplesRemaining = 100;
+var calVals = []; // columns of 'data frames'
+
 // formalize the different event listeners so that we can add and remove them
-function playGameHandler(data) {
+function gameDataHandler(data) {
   // push the signals from the Arduino into the database
   var gameState = process(data);
   db.push(gameState);
+  switch (currentMode) {
+    case gameModes.rest:
+      handleRestMode(gameState);
+      break;
+    case gameModes.align:
+      handleAlignMode(gameState);
+      break;
+    case gameModes.calibrate:
+      handleCalibrationMode(gameState, calVals, socket);
+      calibrationSamplesRemaining--;
+      if (calibrationSamplesRemaining === 0) {
 
-  // check if the laser levels are good
-  var playerLost = checkLasers(gameState.prStates);
+      }
+      break;
+    case gameModes.play:
+      handlePlayMode(gameState);
+      break;
 
-  // handle if the player has lost
-  if (playerLost) {
-    socket.emit('STOP_CLOCK', {}) // stop the clock
-    socket.emit('PLAYER_LOST', {})// tell the UI the player lost
-  }
+    default:
+      return;
+  }  
 }
 // configure serialPort
 // sp.on('open', () => console.log('serial port listening'));
-sp.on('data', playGameHandler);
+sp.on('data', gameDataHandler);
 
 // saving this syntax for later
-// sp.removeListener('data', playGameHandler);
+// sp.removeListener('data', gameDataHandler);
