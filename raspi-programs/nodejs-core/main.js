@@ -15,11 +15,11 @@ const checkLasers = require('./lib/check-if-lasers-are-broken');
 
 // initialize components
 const db = new Database('devdb/db.json');
-const sp = new SerialPort('pathToPort', {
-    baudrate: 9600,
-    parser: SerialPort.parsers.readline('\n'),
-});
-const socket = io.connect('localhost', {
+// const sp = new SerialPort('pathToPort', {
+//     baudrate: 9600,
+//     parser: SerialPort.parsers.readline('\n'),
+// });
+const socket = io.connect('http://localhost', {
   port: 80,
   reconnect: true,
 });
@@ -36,6 +36,7 @@ const gameModes = Object.freeze({
 var currentMode = gameModes.rest;
 var calibrationSamplesRemaining = 100;
 var calVals = []; // columns of 'data frames'
+var gameRunning = false;
 
 // formalize the different event listeners so that we can add and remove them
 function gameDataHandler(data) {
@@ -69,9 +70,37 @@ function gameDataHandler(data) {
       return;
   }  
 }
+
 // configure serialPort
 // sp.on('open', () => console.log('serial port listening'));
-sp.on('data', gameDataHandler);
+//  
 
 // saving this syntax for later
 // sp.removeListener('data', gameDataHandler);
+
+// configure the socket
+/// setting game mode
+socket.on('setmode:rest', () => {
+  currentMode = gameModes.rest;
+});
+socket.on('setmode:align', () => {
+  currentMode = gameModes.align;
+})
+socket.on('setmode:cal', () => {
+  currentMode = gameModes.calibrate;
+};
+socket.on('setmode:game', () => {
+  currentMode = gameModes.game;
+});
+/// calibration events
+socket.on('cal:init', () => {
+
+})
+//// no data or finish events, this program generates those and does not need
+//// to listen to them.
+
+/// game mode events
+socket.on('game:forcestop', () => {
+  // stop the game from running
+  gameRunning = false;
+})
