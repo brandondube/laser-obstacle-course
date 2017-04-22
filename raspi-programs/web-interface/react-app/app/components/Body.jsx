@@ -24,6 +24,13 @@ const inkBarHeight = {
   height: 6,
 };
 
+const indextoGameMode = {
+  0: 'rest',
+  1: 'align',
+  2: 'calibrate',
+  3: 'game'
+};
+
 class Body extends React.Component {
   constructor(props) {
     super(props);
@@ -62,10 +69,7 @@ class Body extends React.Component {
       clearInterval(this.timer);
     });
 
-    this.timer = setInterval(
-      this.tick,
-      1000
-    );
+    socket.emit('setmode:game');
   }
 
   componentWillUnmount() {
@@ -73,7 +77,11 @@ class Body extends React.Component {
   }
 
   tick = () => {this.setState({ timeCurrent: new Date()}) };
-  select = (index) => { this.setState({selectedTabIndex: index})};
+  select = (index) => {
+    const socket = this.context.socket;
+    socket.emit(`setmode:${indextoGameMode.index}`);
+    this.setState({selectedTabIndex: index})
+  };
   render() {
     return (
       <Tabs
