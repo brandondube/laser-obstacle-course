@@ -47,4 +47,7 @@ io.on('connection', socket => {
   socket.on('game:end', (winner) => {
     io.emit('game:end', winner);
   });
+  socket.on('game:forcestop', () => {
+    io.emit('game:forcestop');
+  });
 });
