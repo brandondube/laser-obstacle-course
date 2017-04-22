@@ -13,7 +13,7 @@ import * as Colors from 'material-ui/styles/colors';
 // sockets
 import io from 'socket.io-client';
 import SocketProvider from './SocketProvider';
-const socket = io.connect();
+const socket = io.connect('http://localhost:80');;
 
 // build theme
 const theme = getMuiTheme({
