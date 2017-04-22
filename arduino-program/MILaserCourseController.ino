@@ -101,8 +101,9 @@ void loop() {
   }
 }
 String constructSerialTx() {
-  return finishPushed + "_" + startPushed + "_" + lasersOn
-    + "_" + pr1Val + "_" + pr2Val + "_" + pr3Val + "_" + pr4Val
-    + "_" + pr5Val + "_" + pr6Val + "_" + pr7Val + "_" + pr8Val
-    + "_" + pr9Val + "_" + pr10Val;
+  serialTx += finishPushed + "_" + startPushed + "_" + lasersOn;
+  for(int i=0; i < numPrPins; i++) {
+      serialTx += prValues[i];
+  }
+  return serialTx;
 }
