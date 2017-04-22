@@ -62,10 +62,13 @@ class Body extends React.Component {
     socket.on('game:start', () => {
       this.timer = setInterval(
         this.tick,
-        1000
+        1000 // remember to change me for faster clock updates!
       );
     });
     socket.on('game:end', () => {
+      clearInterval(this.timer);
+    });
+    socket.on('game:forcestop', () => {
       clearInterval(this.timer);
     });
 
