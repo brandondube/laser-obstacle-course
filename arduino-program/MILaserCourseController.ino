@@ -56,8 +56,18 @@ void serialEvent() {
 void loop() {
   // if we've recieved information, use it
   if (RxComplete) {
-    // TODO: use the string to change the mode, etc...
-
+    if (serialRx == "setmode:rest") {
+      currentMode = 0;
+    }
+    else if (serialRx == "setmode:align") {
+      currentMode = 1;
+    }
+    else if (serialRx == "setmode:calibrate") {
+      currentMode = 2;
+    }
+    else if (serialRx == "setmode:game") {
+      currentMode = 3;
+    }
     RxComplete = true;
   }
 
